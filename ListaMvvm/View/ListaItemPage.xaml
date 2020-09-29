@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ListaMvvm.ViewModel"
+             x:Class="ListaMvvm.View.ListaItemPage">
+    <ContentPage.BindingContext>
+        <local:ListaItemViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="Fill">
+            <StackLayout Padding="20" 
+                         AbsoluteLayout.LayoutFlags="All" 
+                         AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Button Text="Adicionar" VerticalOptions="Center" IsVisible="{Binding IsNotAdicionando}" Clicked="Adicionar_Clicked"/>
+                <ListView ItemsSource="{Binding Itens}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Desc}" FontSize="Medium" 
+                                       HorizontalOptions="FillAndExpand" 
+                                       VerticalOptions="Center" />
+                                    <Button Text="Remover" 
+                                        VerticalOptions="Center" 
+                                        Clicked="Remover_Clicked" 
+                                        CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Enviar para Servidor" 
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsEnviarParaServidor}"/>
+            </StackLayout>
+
+            <StackLayout Padding="20"
+                         AbsoluteLayout.LayoutFlags="All" 
+                         AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="{Binding IsAdicionando}"
+                         BackgroundColor="AliceBlue">
+                <Frame Padding="20" CornerRadius="10" BackgroundColor="#C0C0C0"
+                       VerticalOptions="CenterAndExpand">
+                    <StackLayout Orientation="Horizontal">
+                        <Entry Text="{Binding Desc}" Placeholder="Descrição" HorizontalOptions="FillAndExpand" />
+                        <Button Text="Inserir" HorizontalOptions="End" Command="{Binding InserirCommand}" />
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+            
+        </AbsoluteLayout>
+
+    </ContentPage.Content>
+</ContentPage>
